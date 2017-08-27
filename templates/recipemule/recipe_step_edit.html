@@ -1,0 +1,34 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="/static/admin/css/base.css" />
+<link rel="stylesheet" type="text/css" href="/static/admin/css/forms.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="{% static "recipemule/js/rango-jquery.js" %}"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+  
+<script>
+    $( function() {
+    $( "#tabs" ).tabs();
+    } );
+</script>
+
+{% block content %}
+    <form method="POST">{% csrf_token %}
+ 
+<div id="tabs">
+  <ul>
+    <li><a href="#tabs-1">Recipe Steps</a> </li>
+    </li>
+  </ul>
+
+  <div id="tabs-1">
+    <p><h2> Please enter the steps for the recipe </h2>
+        {{ s_form.as_p }}
+	<button type="submit" class="save btn btn-default">Save</button>
+    </p>
+  </div>
+</div>
+</form> 
+{% endblock %}

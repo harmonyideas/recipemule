@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+{% block content %}
+
+<html>
+<head>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'recipemule/mainstyle.css' %}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="{% static "recipemule/js/recipemule_home.js" %}"></script>
+
+<title>RecipeMule</title>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="headerwrap">
+        <div id="header"><p><b>RecipeMule - list of recipes</b></p>
+        </div>
+	</div>
+	<div id="rightcolumnwrap">
+	<div id="rightcolumn">
+
+	<input id="button_toggle1" type="button" value="Click to add recipe"><div id="toggle1">
+    	<form method="POST" name="frmRecipe">{% csrf_token %}
+    	<h2> Please enter a name for the recipe </h2>
+        {{ r_form.as_p }}
+	<button type="submit" class="save btn btn-default">Save</button>
+	</form> 
+        </div>
+</div>
+	</div>
+        <div id="contentwrap">
+        <div id="content">
+	<p><b> Click on a recipe to view its details</b></p>
+	{% for key in latest_recipe_list %}
+            <p>[{{ key.id }}] <a href="/recipemule/{{ key.id }}/"> {{ key.recipe_text }}</a></p>
+	{% endfor %}
+        </div>
+        </div>
+        <div id="footerwrap">
+        <div id="footer"><p>Posted by: One sexy mule</p>
+        </div>
+    </div>
+   </div>
+</body>
+</html>
+{% endblock %}

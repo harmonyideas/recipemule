@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+{% block content %}
+
+<html lang="en">
+		<head>
+				{% load static %}
+				<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+				<link rel="stylesheet" type="text/css" media="print" href="{% static 'recipemule/printstyle.css' %}">
+				<link rel="stylesheet" type="text/css" href="{% static 'recipemule/style.css' %}">
+				<script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
+
+				<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+				{{ recipe_details.frmRecipeIngredient.media }}
+				<script src="{% static "recipemule/js/recipemule_detail.js" %}"></script>
+				<title>RecipeMule</title>
+		</head>
+		<body>
+						<div id="headernav">
+							<div class="container-fluid">
+							<div class="row"> 
+								<div class="col-md-8"><p class="row text-left"><a href="/recipemule"><span class="glyphicon glyphicon-home" style="font-size:24px;"></span> Home</a></p></div>
+								<div class="col-md-4"><p class="row text-right"><a href="javascript:window.print()"><span class="glyphicon glyphicon-print" style="font-size:24px;"></span> Print</a></p></div>
+							</div>
+							</div>
+						</div>
+				<div id="wrapper">
+						<div id="headerwrap">
+								<div id="header">
+								<p><input id="button_toggle3" type="button" class="btn btn-primary" value="Edit Recipe  >>"></p>
+						<div id="toggle3">
+								<form method="POST" name="frmRecipe" class="form-inline">
+										{% csrf_token %}
+										{% for field in recipe_details.frmRecipe %}
+										<div class="form-group">
+												{{ field.errors }}
+									<label class="col-sm-2 col-form-label" for="{{ field.name }}">{{ field.label }}</label>{{ field }}
+												{% if field.help_text %}
+												<p class="help">{{ field.help_text|safe }}</p>
+												{% endif %}
+										</div>
+										{% endfor %}
+										<button type="submit" class="save btn btn-default">Save</button>
+								</form>
+						</div>
+										{% for key in recipe_details.RecipeMain %}
+										<p>Recipe Details: {{ key.recipe_name }}</p><p>{{ key.recipe_description }}</p>
+										<img src="{% static "recipemule/images/" %}{{ key.image_filename }}" class="img-thumbnail" alt="Detail Recipe Image">
+										<p><a href='/recipemule/recipe_delete/{{ key.id }}/' onclick="return confirm('Are you sure?')">Remove Recipe from Database</a></p>
+										{% endfor %}
+								</div>
+						</div>
+
+				</div>
+				<div id="rightcolumnwrap">
+						<div id="rightcolumn">
+								<div id="toggle1"><form method="POST" name="frmRecipeIngredient" class="form-inline">{% csrf_token %}
+												{{ recipe_details.frmRecipeIngredient.as_p }}
+												<button type="submit" class="save btn btn-default">Save</button>
+										</form>
+								</div>
+								<p><input id="button_toggle1" type="button" class="btn btn-primary" value="+ Ingredients >>"></p><hr>
+								<div class="table-responsive">
+										<table id="ingredient_table" class="table table-condensed">
+												<thead>
+														<tr>
+																<th>Amount</th>
+																<th>Ingredient</th>
+																<th>Ingredient Notes</th>
+																<th>Action</th>
+														</tr>
+												</thead>
+												<tbody>
+														<tr>
+																{% for key in recipe_details.RecipeIngredient %}
+																<td>{{ key.amount }} {{key.measurement_id.abbreviation_text}}</td>
+																<td>{{ key.ingredient_id }}</td>
+																<td>{{ key.note_text }}</td>
+																<td><a href='/recipemule/ri_delete/{{ key.id }}/' onclick="return confirm('Are you sure?')">Remove</a></td>
+														</tr>
+														{% endfor %}
+												</tbody>
+										</table>
+								</div>
+						</div>
+						<div id="contentwrap">
+								<div id="content">
+
+										<div id="toggle2"><form method="POST" name="frmStep">{% csrf_token %}
+														{{ recipe_details.frmStep.as_p }}
+														<button type="submit" class="save btn btn-default" >Save</button>
+												</form>
+										</div>
+										<p><input id="button_toggle2" type="button" class="btn btn-primary" value="+ Steps  >>"></p><hr>
+										<div class="table-responsive">
+												<table id="step_table" class="table table-condensed">
+														<thead>
+																<tr>
+																		<th id="step">Step</th>
+																		<th id="instructions">Instructions</th>
+																		<th id="action">Action</th>
+																</tr>
+														</thead>
+														<tbody>
+																
+																		{% for key in recipe_details.RecipeStep %}
+																<tr>
+																		<td headers="step">{{ forloop.counter }}</td>
+																		<td headers="instructions">{{ key.step_instructions_text }}</td>
+																		<td headers="action"><a href='/recipemule/step_delete/{{ key.id }}/' onclick="return confirm('Are you sure?')">Remove</a></td>
+																</tr>
+																{% endfor %}
+														</tbody>
+												</table>
+										</div>
+								</div>
+								<div id="footerwrap">
+										<div id="footer">
+										</div>
+								</div>
+						</div>
+					</div>
+						{{ recipe_details.frmRecipeIngredient.js }}
+		</body>
+</html>
+
+{% endblock %}
