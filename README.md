@@ -1,5 +1,5 @@
 # RecipeMule
-Simple Django project created over a weekend.  Testing autolookup fields and inplace editing.  Not to be used in production!  
+Simple project created for a Django challenge.  Testing autolookup fields and inplace editing.  Manage your recipes online!  
 
 ![SCREENSHOT1](https://github.com/harmonyideas/RecipeMule/blob/master/IMG/MULE1.PNG)    
 ![SCREENSHOT2](https://github.com/harmonyideas/RecipeMule/blob/master/IMG/MULE2.PNG)    
