@@ -1,7 +1,7 @@
 [DISCONTINUED/DEPRECATED]
 RecipeMule
 ================
-Simple project created for a Django challenge. Testing autolookup fields and inplace editing. Manage your recipes online!
+Simple project created with Django. Testing autolookup fields and inplace editing. Manage your recipes online!
 
 Features
 --------
