@@ -7,7 +7,7 @@ Features
 --------
 * Supports CRUD features with recipe database.
 
-Requrements
+Requirements
 -----------
 * Django
 * MySQL/MariaDB or another SQL DB alternative
